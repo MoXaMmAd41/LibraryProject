@@ -1,0 +1,80 @@
+﻿@model LibraryListViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MaterialPage</title>
+
+</head>
+<body>
+
+    <div class="container">
+        <h2 class="mb-4 fw-bold text-center text-primary">Welcome</h2>
+
+        <div class="col-auto mb-4">
+            <a asp-controller="Book" asp-action="AddBook" asp-route-shelfId="@Model.ShelfId" class="btn btn-primary">
+                Add Book
+            </a>
+        </div>
+        <table class="table table-bordered table-striped text-center align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Number of books</th>
+                    <th>Book Name</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Books != null && Model.Books.Any())
+                {
+                    int count = 1;
+                    foreach (var book in Model.Books)
+                    {
+                        <tr>
+                            <td>@count</td>
+                            <td>@book.Name</td>
+                            <td>@book.Price</td>
+                            <td>
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a asp-controller="Book" asp-action="EditBook" asp-route-id="@book.Id" class="btn btn-warning">Edit</a>
+                                    <form asp-action="DeleteBook" asp-route-id="@book.Id" method="post" onsubmit="return confirm('Are you sure you want to delete this book?');">
+                                        <input type="hidden" name="_method" value="DELETE" />
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        count++;
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="3">No books found on this shelf.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+        <div>
+            <div page-model="@Model.PagingInfo" page-action="Index"></div>
+        </div>
+    </div>
+    <nav>
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.PagingInfo.TotalPages; i++)
+            {
+                <li class="page-item @(i==Model.PagingInfo.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-action="MaterialPage" asp-route-shelfId="@Model.ShelfId" asp-route-bookPage ="@i">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+</body>
+
+</html>
