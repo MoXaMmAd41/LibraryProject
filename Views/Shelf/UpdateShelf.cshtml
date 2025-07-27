@@ -1,14 +1,14 @@
-﻿@model Shelf
+﻿@model ShelfDto
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <!DOCTYPE html>
-<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Shelf</title>
+    <title>Update Shelf</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -26,9 +26,9 @@
         }
     </style>
 </head>
-<body>
 
-    <h1 class="text-center">Edit Shelf</h1>
+
+    <h1 class="text-center">Update Shelf</h1>
 
     <div class="form-container">
         <form asp-action="UpdateShelf" method="post">
@@ -36,11 +36,13 @@
             <div class="form-group">
                 <label for="Name">Shelf Name:</label>
                 <input type="text" asp-for="Name" class="form-control" id="Name" required />
+                <span asp-validation-for="Name" class="text-danger"></span>
             </div>
 
             <button type="submit" class="btn btn-success btn-block">Update Shelf</button>
         </form>
     </div>
 
-</body>
-</html>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

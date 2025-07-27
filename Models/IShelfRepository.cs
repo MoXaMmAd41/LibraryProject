@@ -10,5 +10,6 @@ namespace Library.Models
         Task AddShelf(ShelfDto shelfDto);
         Task<Shelf> SoftDeleteShelf(int id);
         Task<Shelf> UpdateShelf(ShelfDto shelfDto);
+        Task<bool> IsShelfExist(string name);
     }
 }

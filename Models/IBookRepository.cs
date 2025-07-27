@@ -9,5 +9,6 @@ namespace Library.Models
         Task<Book> DeleteBook(int id);
         Task<Book> GetBookById(int id);
         Task<Book> UpdateBook(BookDto bookDto);
+        Task<bool> IsBookExist(string name);
     }
 }

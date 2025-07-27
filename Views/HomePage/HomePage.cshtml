@@ -1,0 +1,91 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Home</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background: url('/images/LibraryPic.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .btn-custom {
+            padding: 12px 40px;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            background-color: #ff6f61;
+            border: none;
+            color: #fff;
+            transition: 0.3s;
+        }
+
+            .btn-custom:hover {
+                background-color: #e85c50;
+                transform: scale(1.05);
+            }
+
+            .btn-custom.green {
+                background-color: #4caf50;
+            }
+
+                .btn-custom.green:hover {
+                    background-color: #45a049;
+                }
+
+
+
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+
+    <div class="content">
+        <h1>Welcome to our Library</h1>
+
+        <div class="btn-container">
+            <a asp-controller="Shelf" asp-action="ShelfPage" class="btn-custom">Shelf</a>
+            
+
+        </div>
+    </div>
+</body>
+</html>

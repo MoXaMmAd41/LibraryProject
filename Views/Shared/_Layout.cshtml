@@ -10,9 +10,9 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Shelf" asp-action="HomePage">Library</a>
+                <a class="navbar-brand" asp-area="" asp-controller="HomePage" asp-action="HomePage" style="color:white;">Library</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,9 +20,22 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Shelf" asp-action="HomePage">Home</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="HomePage" asp-action="HomePage">Home</a>
 
                     </ul>
+
+                </div>
+                <div>
+                    <form method="get" asp-controller="Account" asp-action="SetLanguage" class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Language
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                            <li><button class="dropdown-item" type="submit" name="culture" value="en-US">English</button></li>
+                            <li><button class="dropdown-item" type="submit" name="culture" value="ar-JO">العربية</button></li>
+                        </ul>
+                        <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+                    </form>
                 </div>
             </div>
         </nav>
@@ -33,11 +46,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - Library - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

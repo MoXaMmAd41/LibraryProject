@@ -20,14 +20,14 @@ namespace Library.Data
                 new Shelf
                 {
                     Name = "MathShelf"
-                    
-                
+
+
                 },
                 new Shelf
                 {
                     Name = "ScienceShelf"
                 }
-              
+
                 );
                 context.SaveChanges();
             }

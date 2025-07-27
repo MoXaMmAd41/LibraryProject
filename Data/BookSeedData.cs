@@ -20,8 +20,8 @@ namespace Library.Data
                 new Book
                 {
                     Name = "Calculas1",
-                    Price=20,
-                    ShelfId=1
+                    Price = 20,
+                    ShelfId = 1
                 },
                 new Book
                 {

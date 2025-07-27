@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 
+
 namespace Library.Controllers
 {
 
@@ -14,28 +15,32 @@ namespace Library.Controllers
     {
         private IBookRepository _bookRepository;
 
+
         public BookController(IBookRepository repo)
         {
             _bookRepository = repo;
         }
         int PageSize = 3;
-        
-        public ViewResult MaterialPage(int shelfId,int bookPage = 1) =>
+
+        public ViewResult MaterialPage(int shelfId, int bookPage = 1) =>
+
             View(new LibraryListViewModel
-            {   
+            {
+
                 ShelfId = shelfId,
                 Books = _bookRepository.GetBooks()
                 .OrderBy(p => p.Id)
-                .Where(p=>p.ShelfId==shelfId&& p.IsNotActive == false)
+                .Where(p => p.ShelfId == shelfId && p.IsNotActive == false)
                 .Skip((bookPage - 1) * PageSize)
                 .Take(PageSize),
                 PagingInfo = new PagingInfo
                 {
-                   
+
                     CurrentPage = bookPage,
                     ItemsPerPage = PageSize,
                     TotalItems = _bookRepository.GetBooks().Count()
                 }
+
             });
 
 
@@ -43,7 +48,7 @@ namespace Library.Controllers
         public async Task<IActionResult> GetBooks()
         {
             var books = await _bookRepository.GetBooks().ToListAsync();
-            return Json(books);
+            return View(books);
         }
         [HttpGet]
         public IActionResult AddBook(int shelfId)
@@ -59,9 +64,21 @@ namespace Library.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _bookRepository.AddBook(bookDto);                
+                var existingBook = await _bookRepository.IsBookExist(bookDto.Name);
+                
+
+                if (existingBook)
+                {
+                    ModelState.AddModelError("Name", "A book with this name already exists on this shelf.");
+                    ViewBag.ShelfId = bookDto.ShelfId;
+                    return View(bookDto);
+                }
+
+
+                await _bookRepository.AddBook(bookDto);
                 return RedirectToAction("MaterialPage", new { shelfId = bookDto.ShelfId });
             }
+
             ViewBag.ShelfId = bookDto.ShelfId;
             return View(bookDto);
         }
@@ -81,12 +98,12 @@ namespace Library.Controllers
         {
 
             var book = await _bookRepository.GetBookById(id);
-            var bookDto=book.Adapt<BookDto>();    
+            var bookDto = book.Adapt<BookDto>();
             if (bookDto == null)
             {
                 return NotFound("Book not found.");
             }
-            
+
             ViewBag.ShelfId = bookDto.ShelfId;
             return View(bookDto);
         }
@@ -103,11 +120,9 @@ namespace Library.Controllers
             {
                 return NotFound("Book not found.");
             }
-            
+
             return RedirectToAction("MaterialPage", new { shelfId = updatedBook.ShelfId });
         }
-
-
     }
 
 }

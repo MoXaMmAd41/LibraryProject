@@ -1,6 +1,7 @@
 ﻿using Library.Data;
 using Library.Dto;
 using Mapster;
+using Microsoft.EntityFrameworkCore;
 
 namespace Library.Models
 {
@@ -12,6 +13,14 @@ namespace Library.Models
             _context = context;
         }
         public IQueryable<Book> GetBooks() => _context.Books;
+
+        public async Task<bool> IsBookExist(string name)
+        {
+            bool isExist = await _context.Books.AnyAsync(p => p.Name.ToLower() == name.ToLower()&& p.IsNotActive==false);
+            return isExist;
+        }
+
+
 
         public async Task AddBook(BookDto bookDto)
         {
